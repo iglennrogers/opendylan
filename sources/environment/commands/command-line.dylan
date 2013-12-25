@@ -30,7 +30,7 @@ define class <command-line-server> (<object>)
     required-init-keyword: context:;
   constant slot server-input-stream :: <stream>,
     required-init-keyword: input-stream:;
-  constant slot server-output-stream :: <stream>,
+  slot server-output-stream :: <stream>,
     required-init-keyword: output-stream:;
   slot server-incomplete-command-line :: false-or(<string>) = #f;
   slot server-last-command :: false-or(<command>) = #f;
@@ -43,7 +43,7 @@ define class <command-line-server> (<object>)
 end class <command-line-server>;
 
 define method initialize
-    (server :: <command-line-server>, #key) => ()
+    (server :: <command-line-server>,#key) => ()
   next-method();
   let context = server.server-context;
   context.context-server := server
@@ -320,7 +320,7 @@ define function display-condition
         end
       end;
   message(context, "");
-  message(context, "%s%s", prefix, error-message)
+  message(context, "%s%s", prefix, error-message);
 end function display-condition;
 
 define method tokenize-string

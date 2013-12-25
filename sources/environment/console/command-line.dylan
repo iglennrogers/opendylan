@@ -148,7 +148,7 @@ define method do-execute-command
            => (success :: <integer>)
             let command-line = $main-command-line;
             let filename = as(<file-locator>, application-filename());
-	    let command = apply(make, class,
+      	    let command = apply(make, class,
                                 server: context,
                                 command: command-line,
                                 title: as-uppercase(locator-base(filename)),

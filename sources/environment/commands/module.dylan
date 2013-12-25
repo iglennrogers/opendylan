@@ -15,6 +15,7 @@ define module command-lines
 	      keyboard-interrupt-polling?-setter,
 	      keyboard-interrupt-polling-thread?-setter };
   use commands;
+  use standard-io;
   use file-system;
   use operating-system;
   use streams;
@@ -28,6 +29,7 @@ define module command-lines
          server-context,
          server-input-stream,
          server-output-stream,
+         server-output-stream-setter,
          server-debugger?, server-debugger?-setter,
          server-profile-commands?, server-profile-commands?-setter;
 
@@ -125,6 +127,7 @@ define module environment-commands
 	       parameter-keyword };
   use environment-manager;
   use environment-reports;
+  use standard-io;
 
   use commands;
   use command-lines;

@@ -11,6 +11,7 @@ define constant $error-exit-code   = -1;
 
 define function main
     (arguments :: <string>)
+  console-output-stream(#"colour");
   let input-stream = *standard-input*;
   let output-stream = *standard-output*;
   let server

@@ -23,6 +23,8 @@ Files:	library
 	format
 	buffered-format
 	format-condition
+	ansi
+	console-stream
         unix-file-accessor
 	unix-standard-io
 	unix-interface

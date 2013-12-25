@@ -10,6 +10,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Compiler back-end
 
+define constant $warning-style = make(<console-styling>, fg: #"magenta");
+define constant $note-style = make(<console-styling>, fg: #"green");
+
 define class <compiler-back-end-property> (<environment-property>)
 end class <compiler-back-end-property>;
 
@@ -238,9 +241,13 @@ define method do-execute-command
            progress-callback:    curry(note-build-progress, context),
            error-handler:        curry(compiler-condition-handler, context))
       end;
-      message(context, "Build of '%s' completed", project.project-name)
+      with-console-styling($note-style)
+        message(context, "Build of '%s' completed", project.project-name);
+      end;
     else
-      message(context, "Build of '%s' aborted",   project.project-name)
+      with-console-styling($warning-style)
+        message(context, "Build of '%s' aborted",   project.project-name);
+      end;
     end
   exception (error :: <file-system-error>)
     command-error("%s", error)
@@ -262,7 +269,7 @@ define method note-build-progress
   let last-item-label = project-context.context-last-item-label;
   if (item-label & ~empty?(item-label) & item-label ~= last-item-label)
     project-context.context-last-item-label := item-label;
-    message(context, "%s", item-label)
+    message(context, "%s", item-label);
   end
 end method note-build-progress;
 
@@ -271,7 +278,9 @@ define method note-compiler-warning
   let project = context.context-project;
   let stream = context.context-server.server-output-stream;
   new-line(stream);
-  print-environment-object-name(stream, project, warning, full-message?: #t);
+  with-console-styling($warning-style)
+    print-environment-object-name(stream, project, warning, full-message?: #t);
+  end;
   new-line(stream)
 end method note-compiler-warning;
 
@@ -315,7 +324,9 @@ define method compiler-condition-handler
     (context :: <environment-context>,
      handler-type == #"link-warning", warning-message :: <string>)
  => (filename :: singleton(#f))
-  message(context, "%s", warning-message);
+  with-console-styling($warning-style)
+    message(context, "%s", warning-message);
+  end;
 end method compiler-condition-handler;
 
 define method compiler-condition-handler
@@ -338,7 +349,9 @@ define method compiler-condition-handler
      handler-type == #"warning",
      warning-message :: <string>)
  => (yes? :: <boolean>)
-  message(context, "warning: %s", warning-message)
+  with-console-styling($warning-style)
+    message(context, "warning: %s", warning-message);
+  end;
 end method compiler-condition-handler;
 
 define method compiler-condition-handler
@@ -346,7 +359,9 @@ define method compiler-condition-handler
      handler-type :: <symbol>,
      warning-message :: <string>)
  => (yes? :: <boolean>)
-  message(context, "missing handler for %s: %s", handler-type, warning-message)
+  with-console-styling($warning-style)
+    message(context, "missing handler for %s: %s", handler-type, warning-message);
+  end;
 end method compiler-condition-handler;
 
 

@@ -23,6 +23,8 @@ Files:	library
 	format
 	buffered-format
 	format-condition
+	ansi
+	console-stream
         win32-interface
         win32-file-accessor
 	win32-standard-io

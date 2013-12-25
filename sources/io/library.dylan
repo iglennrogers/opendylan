@@ -324,8 +324,13 @@ end module format-internals;
 
 define module standard-io
   create *standard-input*,
-	 *standard-output*,
-	 *standard-error*;
+         *standard-output*,
+         *standard-error*,
+         console-output-stream,
+         <console-stream>,
+         <console-styling>,
+         *reset-console-styling*,
+	 with-console-styling;
 end module standard-io;
 
 define module format-out

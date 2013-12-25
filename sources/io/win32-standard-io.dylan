@@ -67,8 +67,20 @@ end function;
 define variable *standard-input* 
   = make-std-stream($STD_INPUT_HANDLE, #"input");
 
-define variable *standard-output*
+define variable *internal-standard-output*
   = make-std-stream($STD_OUTPUT_HANDLE, #"output");
+
+define variable *standard-output*
+  = *internal-standard-output*;
 
 define variable *standard-error*
   = make-std-stream($STD_ERROR_HANDLE, #"output");
+
+// windows command prompt doesn't accept ansi codes
+define function console-output-stream (option :: <console-colour-options>) => ()
+  if (option == #"base")
+    *standard-output* := *internal-standard-output*;
+  else
+    *standard-output* := make(<non-console-output-stream>, inner-stream: *standard-output*, direction: #"output");
+  end;
+end;
